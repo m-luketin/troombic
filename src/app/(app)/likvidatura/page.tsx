@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Pill, StatusPill } from "@/components/status-pill";
@@ -41,6 +41,14 @@ const FILTERS: { key: Filter; label: string; match: (s: InvoiceStatus) => boolea
 ];
 
 export default function LikvidaturaQueuePage() {
+  return (
+    <Suspense fallback={null}>
+      <LikvidaturaQueueInner />
+    </Suspense>
+  );
+}
+
+function LikvidaturaQueueInner() {
   const all = invoices as Invoice[];
   const searchParams = useSearchParams();
   const initialQ = searchParams.get("q") ?? "";
