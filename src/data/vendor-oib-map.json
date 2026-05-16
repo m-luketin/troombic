@@ -1,0 +1,77 @@
+{
+  "_schema": {
+    "purpose": "Lookup table: vendor name → OIB → payment history dataset. Used by supplier-history panel in Likvidatura + Natječaji to surface historical payments when an invoice or tender displays a vendor.",
+    "extending": "Add entries here when new vendors appear in invoices.json or TED API responses. The supplier-history panel falls back to 'No payment history yet — first contract' if no entry matches.",
+    "fields": {
+      "oib": "Croatian tax ID, 11 digits, canonical key",
+      "naziv_canonical": "Official legal name in registry",
+      "naziv_aliases": "Alternative spellings/cases that might appear in TED or invoices",
+      "payments_source": "Which bundled dataset holds the payment history (null if none yet)",
+      "kategorija": "Loose grouping for UI badges"
+    }
+  },
+  "vendors": [
+    {
+      "oib": "14506572540",
+      "naziv_canonical": "LIBUSOFT CICOM D.O.O.",
+      "naziv_aliases": [
+        "Libusoft Cicom",
+        "Libusoft Cicom d.o.o.",
+        "LIBUSOFT CICOM",
+        "LC d.o.o.",
+        "Lugosoft"
+      ],
+      "payments_source": "lc-payments.json",
+      "kategorija": "IT softver"
+    },
+    {
+      "oib": "43133467092",
+      "naziv_canonical": "PROMET SPLIT D.O.O.",
+      "naziv_aliases": ["Promet Split", "Promet d.o.o. Split"],
+      "payments_source": null,
+      "kategorija": "Gradsko poduzeće — prijevoz"
+    },
+    {
+      "oib": "85530277347",
+      "naziv_canonical": "VODOVOD I KANALIZACIJA D.O.O. SPLIT",
+      "naziv_aliases": ["VIK", "VIK Split", "Vodovod i kanalizacija Split"],
+      "payments_source": null,
+      "kategorija": "Gradsko poduzeće — voda"
+    },
+    {
+      "oib": "98144078787",
+      "naziv_canonical": "ČISTOĆA D.O.O. SPLIT",
+      "naziv_aliases": ["Čistoća Split", "Cistoca Split"],
+      "payments_source": null,
+      "kategorija": "Gradsko poduzeće — otpad"
+    },
+    {
+      "oib": "63073332379",
+      "naziv_canonical": "HEP-OPSKRBA D.O.O.",
+      "naziv_aliases": ["HEP Opskrba", "HEP"],
+      "payments_source": null,
+      "kategorija": "Komunalije — energija"
+    },
+    {
+      "oib": "29524210204",
+      "naziv_canonical": "A1 HRVATSKA D.O.O.",
+      "naziv_aliases": ["A1 Hrvatska", "Vipnet"],
+      "payments_source": null,
+      "kategorija": "Telekomunikacije"
+    },
+    {
+      "oib": "37011611388",
+      "naziv_canonical": "KONSTRUKTOR INŽENJERING D.D.",
+      "naziv_aliases": ["Konstruktor Inženjering", "Konstruktor"],
+      "payments_source": null,
+      "kategorija": "Graditeljstvo"
+    },
+    {
+      "oib": "87311810356",
+      "naziv_canonical": "HRVATSKA POŠTA D.D.",
+      "naziv_aliases": ["Hrvatska pošta", "HP"],
+      "payments_source": null,
+      "kategorija": "Poštanske usluge"
+    }
+  ]
+}

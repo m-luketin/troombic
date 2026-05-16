@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Troombic — SheepAI 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #2E308C;
+    --bg-2: #2A2C82;
+    --bg-deep: #0B172A;
+    --surface: rgba(255, 255, 255, 0.06);
+    --surface-2: rgba(255, 255, 255, 0.10);
+    --border: rgba(255, 255, 255, 0.24);
+    --border-strong: rgba(255, 255, 255, 0.38);
+    --fg: #FFFFFF;
+    --fg-2: rgba(255, 255, 255, 0.86);
+    --fg-3: rgba(255, 255, 255, 0.66);
+    --brand: #F5B342;
+    --brand-deep: #2E308C;
+    --teal: #5BE3D0;
+    --danger: #FFA39A;
+    --warn: #F5B342;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #000; }
+  body { font-family: var(--sans); color: var(--fg); font-feature-settings: "ss01", "cv11"; }
+
+  deck-stage { --slide-bg: var(--bg); }
+
+  .slide {
+    width: 1920px; height: 1080px;
+    background: var(--bg);
+    color: var(--fg);
+    position: relative;
+    overflow: hidden;
+    padding: 120px 160px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chrome { display: none; }
+
+  /* ----------- typography ----------- */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 28px; height: 1px;
+    background: var(--teal);
+    opacity: 0.7;
+  }
+  .eyebrow.muted { color: var(--fg-3); }
+  .eyebrow.muted::before { background: var(--fg-3); }
+
+  h1.display {
+    font-size: 124px;
+    line-height: 1.02;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+  h1.large {
+    font-size: 96px;
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  h2.title {
+    font-size: 68px;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  .lede {
+    font-size: 32px;
+    line-height: 1.4;
+    font-weight: 300;
+    color: var(--fg-2);
+    max-width: 1100px;
+    text-wrap: pretty;
+  }
+  .lede strong { color: var(--fg); font-weight: 500; }
+
+  /* ----------- citation blocks ----------- */
+  .citation {
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--fg-3);
+    letter-spacing: 0.01em;
+    max-width: 560px;
+  }
+  .citation .label {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    color: var(--fg-2);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .citation .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    color: var(--fg-2);
+  }
+  .citation .row + .row { margin-top: 4px; }
+  .citation .row .src { color: var(--fg); }
+  .citation .row .date { color: var(--fg-3); font-variant-numeric: tabular-nums; }
+
+  /* ----------- footer ----------- */
+  .foot {
+    position: absolute;
+    bottom: 56px; left: 160px; right: 160px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.05em; color: var(--fg-3);
+    text-transform: uppercase;
+  }
+
+  /* ===================== SLIDE 1: hook ===================== */
+  .s-hook {
+    flex-direction: row;
+    padding: 0;
+    align-items: stretch;
+  }
+  .s-hook .hook-text {
+    flex: 1;
+    padding: 0 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .s-hook .quote-mark {
+    font-family: var(--mono);
+    font-size: 200px;
+    line-height: 0.6;
+    color: var(--brand);
+    opacity: 0.55;
+    margin-bottom: 24px;
+  }
+  .s-hook h1.display { font-size: 96px; letter-spacing: -0.04em; }
+  .s-hook .lede { margin-top: 48px; font-size: 32px; color: var(--fg); }
+  .s-hook .hook-image {
+    width: 820px;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .s-hook .hook-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .s-hook .hook-image::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--bg) 0%, transparent 16%);
+    pointer-events: none;
+  }
+
+  /* ===================== SLIDE 2: interviews ===================== */
+  .s-interviews {
+    flex-direction: row;
+    align-items: center;
+    gap: 80px;
+  }
+  .s-interviews .big-n {
+    font-family: var(--mono);
+    font-size: 480px;
+    line-height: 0.8;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    color: var(--fg);
+    flex-shrink: 0;
+  }
+  .s-interviews .col-r { display: flex; flex-direction: column; gap: 32px; }
+  .s-interviews .col-r h1 { font-size: 76px; line-height: 1.05; font-weight: 500; letter-spacing: -0.02em; }
+  .s-interviews .col-r .lede { font-size: 28px; max-width: 760px; }
+
+  /* ===================== SLIDE 3: libusoft indictment ===================== */
+  .s-libusoft .head { display: flex; align-items: baseline; gap: 32px; margin-bottom: 64px; }
+  .s-libusoft .head h1 {
+    font-size: 104px; line-height: 1; font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+  .s-libusoft .head .tag {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--brand);
+    padding: 8px 14px;
+    border-radius: 999px;
+    transform: translateY(-22px);
+    font-weight: 600;
+  }
+  .s-libusoft .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 80px;
+    row-gap: 24px;
+    flex: 1;
+    align-content: start;
+  }
+  .s-libusoft .item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    align-items: baseline;
+    gap: 24px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    font-size: 26px;
+    line-height: 1.4;
+    color: var(--fg-2);
+  }
+  .s-libusoft .item .num {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--fg-3);
+    font-weight: 500;
+  }
+  .s-libusoft .item .body { font-weight: 300; }
+  .s-libusoft .item .hit {
+    font-family: var(--mono);
+    color: var(--fg);
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .s-libusoft .item .hit.brand { color: var(--brand); }
+  .s-libusoft .item .hit.teal { color: var(--teal); }
+  .s-libusoft .item .hit.rising {
+    color: var(--danger);
+    font-style: italic;
+    font-family: var(--sans);
+    font-weight: 500;
+  }
+  .s-libusoft .item .hit.rising::after {
+    content: " ↗";
+    font-family: var(--mono);
+    font-style: normal;
+  }
+  .s-libusoft .citation { position: absolute; bottom: 56px; left: 160px; }
+
+  /* ===================== SLIDE 4: €2.3M ===================== */
+  .s-cost {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .s-cost .label-row {
+    display: flex; align-items: center; gap: 32px;
+    margin-bottom: 56px;
+  }
+  .s-cost .label-row .eyebrow.muted::before { background: var(--fg-3); }
+  .s-cost .figure {
+    font-family: var(--mono);
+    font-size: 360px;
+    line-height: 0.9;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    color: var(--fg);
+    position: relative;
+  }
+  .s-cost .figure .currency {
+    color: var(--brand);
+    font-weight: 400;
+  }
+  .s-cost .figure .plus {
+    font-size: 160px;
+    color: var(--teal);
+    vertical-align: top;
+    line-height: 1;
+    margin-left: 12px;
+    font-weight: 400;
+  }
+  .s-cost .sub {
+    margin-top: 56px;
+    font-size: 30px;
+    color: var(--fg-2);
+    font-weight: 300;
+    max-width: 1000px;
+  }
+  .s-cost .breakdown {
+    display: flex;
+    gap: 0;
+    margin-top: 56px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .s-cost .breakdown .cell {
+    flex: 1;
+    padding: 28px 40px;
+    text-align: left;
+    border-left: 1px solid var(--border);
+  }
+  .s-cost .breakdown .cell:first-child { border-left: 0; }
+  .s-cost .breakdown .k {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    margin-bottom: 10px;
+  }
+  .s-cost .breakdown .v {
+    font-family: var(--mono);
+    font-size: 22px;
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .s-cost .breakdown .v small {
+    color: var(--fg-2);
+    font-weight: 400;
+    font-size: 16px;
+  }
+  .s-cost .citation { position: absolute; bottom: 56px; right: 160px; text-align: right; border-top-color: var(--border); }
+  .s-cost .citation .row { justify-content: flex-end; }
+
+  /* ===================== SLIDE 5: daily UX ===================== */
+  .s-ux .head { margin-bottom: 56px; }
+  .s-ux h2.title { font-size: 76px; }
+  .s-ux .symptoms {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 80px;
+    row-gap: 0;
+    flex: 1;
+    align-content: start;
+  }
+  .s-ux .sym {
+    display: flex; align-items: center; gap: 28px;
+    padding: 22px 0;
+    border-top: 1px solid var(--border);
+    font-size: 30px;
+    color: var(--fg);
+    font-weight: 400;
+  }
+  .s-ux .sym .key {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--fg-3);
+    letter-spacing: 0.1em;
+    width: 40px;
+  }
+  .s-ux .citation { position: absolute; bottom: 56px; left: 160px; }
+
+  /* ===================== SLIDE 6: troombic intro ===================== */
+  .s-intro { justify-content: center; align-items: center; text-align: center; }
+  .s-intro .logo-mark {
+    display: flex; align-items: center; gap: 28px;
+    margin-bottom: 56px;
+  }
+  .s-intro .logo-mark img { width: 88px; height: 88px; color: var(--fg); }
+  .s-intro .logo-mark .name {
+    font-size: 96px; font-weight: 500; letter-spacing: -0.04em;
+  }
+  .s-intro .lede { font-size: 36px; max-width: 980px; }
+  .s-intro .url-card {
+    margin-top: 88px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 28px 48px;
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    font-family: var(--mono);
+  }
+  .s-intro .url-card .pre {
+    font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .s-intro .url-card .url {
+    font-size: 56px; font-weight: 500; color: var(--fg);
+    letter-spacing: -0.02em;
+  }
+  .s-intro .url-card .url .dot { color: var(--teal); }
+  .s-intro .flow-cue {
+    margin-top: 64px;
+    display: flex; gap: 18px; align-items: center;
+    font-family: var(--mono);
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: var(--fg-2);
+    text-transform: uppercase;
+  }
+  .s-intro .flow-cue .step {
+    padding: 10px 18px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+  }
+  .s-intro .flow-cue .arrow { color: var(--brand); }
+  .s-intro .speaker {
+    position: absolute; bottom: 56px; left: 50%; transform: translateX(-50%);
+    font-style: italic;
+    color: var(--fg-3);
+    font-size: 16px;
+    max-width: 800px; text-align: center;
+    line-height: 1.5;
+  }
+  .s-intro .speaker::before { content: "▸ "; color: var(--brand); font-style: normal; }
+
+  /* ===================== SLIDE 7: product UI ===================== */
+  .s-ui {
+    padding: 80px 120px;
+    background: var(--bg-deep);
+  }
+  .s-ui .head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 40px;
+  }
+  .s-ui .head h2 { font-size: 42px; font-weight: 500; letter-spacing: -0.02em; }
+  .s-ui .window {
+    flex: 1;
+    background: #111F36;
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 8px 32px rgba(245,179,66,0.08);
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .s-ui .winbar {
+    height: 36px;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 18px;
+    gap: 8px;
+    font-family: var(--mono); font-size: 12px;
+    color: var(--fg-3);
+    letter-spacing: 0.06em;
+  }
+  .s-ui .winbar .dots { display: flex; gap: 8px; margin-right: 16px; }
+  .s-ui .winbar .dots span { width: 11px; height: 11px; border-radius: 999px; background: var(--border-strong); }
+  .s-ui .winbar .url-bar {
+    flex: 1; max-width: 460px;
+    background: var(--surface);
+    border-radius: 6px;
+    padding: 5px 12px;
+    text-align: center;
+  }
+  .s-ui .winbar .url-bar .lock { color: var(--teal); margin-right: 8px; }
+  .s-ui .shot {
+    flex: 1;
+    width: 100%;
+    object-fit: cover;
+    object-position: top left;
+    display: block;
+  }
+
+  /* ===================== SLIDE 8: banovina ===================== */
+  .s-banovina .head { margin-bottom: 64px; }
+  .s-banovina .priorities {
+    display: flex; flex-direction: column;
+    gap: 0;
+    flex: 1;
+    align-content: start;
+  }
+  .s-banovina .p {
+    padding: 36px 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 40px;
+  }
+  .s-banovina .p:last-child { border-bottom: 1px solid var(--border); }
+  .s-banovina .p .n {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--fg-3);
+    letter-spacing: 0.16em;
+    font-weight: 500;
+  }
+  .s-banovina .p .label {
+    font-size: 42px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  .s-banovina .p .tag {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brand);
+    padding: 8px 14px;
+    border: 1px solid color-mix(in oklch, var(--brand) 40%, transparent);
+    border-radius: 999px;
+  }
+  .s-banovina .conclude {
+    margin-top: 56px;
+    font-size: 32px;
+    color: var(--fg);
+    font-weight: 300;
+    max-width: 1200px;
+  }
+  .s-banovina .conclude strong { color: var(--brand); font-weight: 500; }
+  .s-banovina .citation { position: absolute; bottom: 56px; right: 160px; text-align: right; }
+  .s-banovina .citation .row { justify-content: flex-end; }
+
+  /* ===================== SLIDE 9: scope ===================== */
+  .s-scope .head { margin-bottom: 56px; }
+  .s-scope .list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    flex: 1;
+    align-content: start;
+  }
+  .s-scope .card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 28px;
+    background: var(--surface);
+    display: flex; flex-direction: column;
+    gap: 18px;
+    min-height: 240px;
+  }
+  .s-scope .card .k {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+  .s-scope .card .v {
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+    margin-top: auto;
+  }
+  .s-scope .foot-note {
+    margin-top: 48px;
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--fg-3);
+  }
+  .s-scope .foot-note::before { content: "+ "; color: var(--teal); }
+
+  /* ===================== SLIDE 10: implementation ===================== */
+  .s-impl .head { margin-bottom: 48px; }
+  .s-impl h2 { font-size: 76px; }
+  .s-impl .label-row {
+    margin-bottom: 40px;
+    font-size: 26px;
+    color: var(--fg-2);
+    font-weight: 300;
+  }
+  .s-impl .integrations {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .s-impl .pill {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 32px 24px;
+    display: flex; flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .s-impl .pill .name {
+    font-family: var(--mono);
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+  .s-impl .pill .what {
+    font-size: 14px;
+    color: var(--fg-2);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+  .s-impl .pill:nth-child(odd) .name { color: var(--brand); }
+  .s-impl .pill:nth-child(even) .name { color: var(--fg); }
+  .s-impl .also {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 22px;
+    color: var(--fg-2);
+    font-weight: 300;
+  }
+  .s-impl .closer {
+    margin-top: 56px;
+    font-size: 28px;
+    color: var(--fg-2);
+    font-weight: 300;
+    max-width: 1200px;
+  }
+  .s-impl .closer p + p { margin-top: 10px; }
+  .s-impl .closer .accent { color: var(--fg); }
+
+  /* ===================== SLIDE 11: tech stack ===================== */
+  .s-stack .head { margin-bottom: 56px; }
+  .s-stack h2 { font-size: 64px; }
+  .s-stack .layers {
+    display: flex; flex-direction: column;
+    gap: 0;
+    margin-bottom: 48px;
+  }
+  .s-stack .layer {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: 40px;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+  }
+  .s-stack .layer:last-child { border-bottom: 1px solid var(--border); }
+  .s-stack .layer .k {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .s-stack .layer .v {
+    font-size: 28px;
+    color: var(--fg);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .s-stack .layer .v .tech {
+    font-family: var(--mono);
+    color: var(--brand);
+    font-weight: 500;
+  }
+  .s-stack .layer .v .tech.warn { color: var(--warn); }
+  .s-stack .reveal {
+    margin-top: 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    flex-direction: column;
+  }
+  .s-stack .reveal .line {
+    font-size: 26px;
+    color: var(--fg-2);
+    font-weight: 300;
+  }
+  .s-stack .reveal .line strong {
+    font-family: var(--mono);
+    color: var(--warn);
+    font-weight: 500;
+  }
+  .s-stack .citation { position: absolute; bottom: 56px; right: 160px; text-align: right; }
+  .s-stack .citation .row { justify-content: flex-end; }
+
+  /* ===================== SLIDE 12: vision ===================== */
+  .s-vision .head { margin-bottom: 64px; }
+  .s-vision h2 { font-size: 84px; }
+  .s-vision .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 80px;
+    flex: 1;
+    align-content: start;
+  }
+  .s-vision .item {
+    padding: 26px 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 28px;
+    font-size: 28px;
+    line-height: 1.4;
+    color: var(--fg);
+    font-weight: 400;
+  }
+  .s-vision .item .n {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .s-vision .item .v strong { font-weight: 500; }
+  .s-vision .item .v small {
+    display: block;
+    margin-top: 4px;
+    font-size: 16px;
+    color: var(--fg-3);
+    font-weight: 300;
+  }
+
+  /* ===================== SLIDE 13: about me ===================== */
+  .s-about { padding-left: 200px; }
+  .s-about .head { margin-bottom: 64px; }
+  .s-about h1 { font-size: 96px; }
+  .s-about .creds {
+    display: flex; flex-direction: column;
+    max-width: 1100px;
+  }
+  .s-about .cred {
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 40px;
+  }
+  .s-about .cred:last-child { border-bottom: 1px solid var(--border); }
+  .s-about .cred .role {
+    font-size: 28px;
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .s-about .cred .role small {
+    display: block;
+    margin-top: 4px;
+    font-size: 16px;
+    color: var(--fg-3);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+  .s-about .cred .org {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  .s-about .closing {
+    margin-top: 56px;
+    max-width: 900px;
+    font-size: 28px;
+    line-height: 1.45;
+    color: var(--fg-2);
+    font-weight: 300;
+  }
+  .s-about .closing strong { color: var(--fg); font-weight: 500; }
+
+  /* ===================== SLIDE 14: closing values ===================== */
+  .s-closing {
+    padding-left: 200px;
+    justify-content: center;
+  }
+  .s-closing .frame {
+    max-width: 1280px;
+    border-left: 2px solid var(--brand);
+    padding-left: 64px;
+  }
+  .s-closing .frame::before {
+    content: "";
+    display: block;
+    width: 80px; height: 1px;
+    background: var(--teal);
+    margin-bottom: 40px;
+    transform: translateX(-64px);
+  }
+  .s-closing p {
+    font-size: 36px;
+    line-height: 1.45;
+    color: var(--fg);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+  .s-closing p + p { margin-top: 32px; }
+  .s-closing p:last-child { color: var(--fg); font-weight: 400; }
+  .s-closing p strong { font-weight: 500; color: var(--fg); }
+  .s-closing p em { font-style: normal; color: var(--brand); font-weight: 500; }
+  .s-closing .signoff {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    transform: translateX(-64px);
+    width: calc(100% + 64px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .s-closing .signoff .name { color: var(--fg); }
+  .s-closing .signoff .where { color: var(--teal); }
+
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+<!-- ============================================== -->
+<!-- SLIDE 1 — hook                                  -->
+<!-- ============================================== -->
+<section class="slide s-hook" data-screen-label="01 Hook">
+  <div class="hook-text">
+    <div class="quote-mark">“</div>
+    <h1 class="display">Make Grad&nbsp;Split<br>better.”</h1>
+    <div class="lede">I took that literally.</div>
+  </div>
+  <div class="hook-image">
+    <img src="deck-assets/split-riva.png" alt="Riva, Split — Cathedral of Saint Domnius">
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 2 — interviews                            -->
+<!-- ============================================== -->
+<section class="slide s-interviews" data-screen-label="02 Interviews">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">02 / 14 &nbsp;·&nbsp; <span>Research</span></div>
+  </div>
+
+  <div class="big-n">3</div>
+  <div class="col-r">
+    <div class="eyebrow">User interviews · City Hall</div>
+    <h1>User interviews<br>with City&nbsp;Hall&nbsp;employees.</h1>
+    <div class="lede">When asked about problems in the city, all three named <strong>the same one</strong> instantly.</div>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 3 — libusoft indictment                   -->
+<!-- ============================================== -->
+<section class="slide s-libusoft" data-screen-label="03 Libusoft">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">03 / 14 &nbsp;·&nbsp; <span>The incumbent</span></div>
+  </div>
+
+  <div class="head">
+    <h1>Libusoft&nbsp;Cicom.</h1>
+    <div class="tag">Vendor since 2019</div>
+  </div>
+
+  <div class="grid">
+    <div class="item">
+      <div class="num">01</div>
+      <div class="body"><span class="hit brand">7,3M&nbsp;kn</span> initial contract in 2019</div>
+    </div>
+    <div class="item">
+      <div class="num">02</div>
+      <div class="body">At least <span class="hit brand">€1,3M</span> paid since</div>
+    </div>
+    <div class="item">
+      <div class="num">03</div>
+      <div class="body">Maintenance costs <span class="hit rising">rising</span> month over month</div>
+    </div>
+    <div class="item">
+      <div class="num">04</div>
+      <div class="body">Two products from the same vendor that <span class="hit teal">can't communicate</span></div>
+    </div>
+    <div class="item">
+      <div class="num">05</div>
+      <div class="body">Property registry never functional — millions more lost, incalculable, no records kept</div>
+    </div>
+    <div class="item">
+      <div class="num">06</div>
+      <div class="body">Employee productivity hindered daily — also a cost, also uncounted</div>
+    </div>
+  </div>
+
+  <div class="citation">
+    <span class="label">Sources</span>
+    <div class="row"><span class="src">Nacional</span><span class="date">April 2022</span></div>
+    <div class="row"><span class="src">Nacional</span><span class="date">October 2022</span></div>
+    <div class="row"><span class="src">Dalmatinski Portal</span><span class="date">October 2022</span></div>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 4 — €2.3M+                                -->
+<!-- ============================================== -->
+<section class="slide s-cost" data-screen-label="04 €2.3M+">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">04 / 14 &nbsp;·&nbsp; <span>Total cost</span></div>
+  </div>
+
+  <div class="label-row">
+    <div class="eyebrow muted">Directly paid to Libusoft · 2019 – 2026</div>
+  </div>
+
+  <div class="figure"><span class="currency">€</span>2,3M<span class="plus">+</span></div>
+
+  <div class="sub">At minimum. Plus millions more in damages — bugs, broken integrations, a failed property registry. <strong style="color:var(--fg);font-weight:500">Real total: unknowable.</strong></div>
+
+  <div class="breakdown">
+    <div class="cell">
+      <div class="k">Initial contract</div>
+      <div class="v">7,3M&nbsp;kn <small>· 2019</small></div>
+    </div>
+    <div class="cell">
+      <div class="k">Paid since</div>
+      <div class="v">≥&nbsp;€1,3M <small>· 2019–2026</small></div>
+    </div>
+    <div class="cell">
+      <div class="k">Trend</div>
+      <div class="v" style="color:var(--danger)">Rising&nbsp;↗ <small style="color:var(--fg-3)">· month over month</small></div>
+    </div>
+    <div class="cell">
+      <div class="k">Damages</div>
+      <div class="v">Uncounted <small>· no records kept</small></div>
+    </div>
+  </div>
+
+  <div class="citation">
+    <span class="label">Sources</span>
+    <div class="row"><span class="src">Nacional</span><span class="date">April 2022</span></div>
+    <div class="row"><span class="src">iTransparentnost</span><span class="date">2019–2026</span></div>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 5 — daily UX                              -->
+<!-- ============================================== -->
+<section class="slide s-ux" data-screen-label="05 Daily UX">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">05 / 14 &nbsp;·&nbsp; <span>Employee experience</span></div>
+  </div>
+
+  <div class="head">
+    <div class="eyebrow">From the inside</div>
+    <h2 class="title" style="margin-top:24px">What it's like to use it.</h2>
+  </div>
+
+  <div class="symptoms">
+    <div class="sym"><span class="key">a.</span>Persistent bugs</div>
+    <div class="sym"><span class="key">e.</span>Multiple logins per user</div>
+    <div class="sym"><span class="key">b.</span>Frequent crashes</div>
+    <div class="sym"><span class="key">f.</span>No unified workspace</div>
+    <div class="sym"><span class="key">c.</span>Outdated UI</div>
+    <div class="sym"><span class="key">g.</span>IT department constantly overwhelmed</div>
+    <div class="sym"><span class="key">d.</span>No mobile access</div>
+    <div class="sym" style="opacity:0"><span class="key"></span></div>
+  </div>
+
+  <div class="citation">
+    <span class="label">Source</span>
+    <div class="row"><span class="src">Anonymous City Hall employees</span><span class="date">2026</span></div>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 6 — troombic intro                        -->
+<!-- ============================================== -->
+<section class="slide s-intro" data-screen-label="06 Troombic">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">06 / 14 &nbsp;·&nbsp; <span>Product</span></div>
+  </div>
+
+  <div class="logo-mark">
+    <img src="deck-assets/logo.svg" alt="Troombic">
+    <div class="name">troombic</div>
+  </div>
+
+  <div class="lede" style="text-align:center;color:var(--fg)">Modern back-office for Croatian local government.</div>
+  <div class="eyebrow muted" style="margin-top:24px;justify-content:center">Built today</div>
+
+  <div class="url-card">
+    <div class="pre">Demo →</div>
+    <div class="url">troombic<span class="dot">.</span>app</div>
+  </div>
+
+  <div class="flow-cue">
+    <div class="step">Likvidatura</div>
+    <span class="arrow">→</span>
+    <div class="step">Queue</div>
+    <span class="arrow">→</span>
+    <div class="step">Approval</div>
+    <span class="arrow">→</span>
+    <div class="step">Audit</div>
+    <span class="arrow">→</span>
+    <div class="step">Ledger</div>
+  </div>
+
+  <div class="speaker">"On the same Croatian regulatory surface Libusoft uses. Switching to live now."</div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 7 — product UI                            -->
+<!-- ============================================== -->
+<section class="slide s-ui" data-screen-label="07 Product UI">
+  <div class="chrome" style="padding: 40px 80px">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">07 / 14 &nbsp;·&nbsp; <span>Live demo</span></div>
+  </div>
+
+  <div class="head" style="margin-top:40px">
+    <div>
+      <div class="eyebrow">Live · troombic.app</div>
+      <h2 style="margin-top:12px">Likvidatura — invoice approval queue.</h2>
+    </div>
+    <div style="font-family:var(--mono);font-size:14px;color:var(--fg-3);letter-spacing:0.1em;text-transform:uppercase;text-align:right">
+      Croatian language · dark mode default<br>
+      <span style="color:var(--teal)">Inter · JetBrains Mono · 8px radii</span>
+    </div>
+  </div>
+
+  <div class="window">
+    <div class="winbar">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="url-bar"><span class="lock">●</span>troombic.app/likvidatura</div>
+      <div style="margin-left:auto">⌘K</div>
+    </div>
+    <img src="deck-assets/likvidatura.png" class="shot" alt="Troombic Likvidatura queue">
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 8 — banovina priorities                   -->
+<!-- ============================================== -->
+<section class="slide s-banovina" data-screen-label="08 Banovina">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">08 / 14 &nbsp;·&nbsp; <span>Why now</span></div>
+  </div>
+
+  <div class="head">
+    <div class="eyebrow">Banovina · 2025—</div>
+    <h2 class="title" style="margin-top:20px;font-size:64px">Stated priorities of the&nbsp;current administration.</h2>
+  </div>
+
+  <div class="priorities">
+    <div class="p">
+      <div class="n">PRIORITY 01</div>
+      <div class="label">Financial transparency as policy</div>
+      <div class="tag">Operational</div>
+    </div>
+    <div class="p">
+      <div class="n">PRIORITY 02</div>
+      <div class="label">Scaling EU fund absorption</div>
+      <div class="tag">Capacity</div>
+    </div>
+    <div class="p">
+      <div class="n">PRIORITY 03</div>
+      <div class="label">Split as a national AI hub</div>
+      <div class="tag">Posture</div>
+    </div>
+  </div>
+
+  <div class="conclude">Troombic is the <strong>operational layer</strong> for all three.</div>
+
+  <div class="citation">
+    <span class="label">Sources</span>
+    <div class="row"><span class="src">Mayor's office public statements</span><span class="date">2025–2026</span></div>
+    <div class="row"><span class="src">AI Centre Split launch</span><span class="date">September 2025</span></div>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 9 — scope                                 -->
+<!-- ============================================== -->
+<section class="slide s-scope" data-screen-label="09 Scope">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">09 / 14 &nbsp;·&nbsp; <span>Scope</span></div>
+  </div>
+
+  <div class="head">
+    <div class="eyebrow">In the legacy system today</div>
+    <h2 class="title" style="margin-top:20px">Five functional areas.</h2>
+  </div>
+
+  <div class="list">
+    <div class="card">
+      <div class="k">01 · Finance</div>
+      <div class="v">Budget, accounting, treasury</div>
+    </div>
+    <div class="card">
+      <div class="k">02 · People</div>
+      <div class="v">Invoice approval (likvidatura) + payroll</div>
+    </div>
+    <div class="card">
+      <div class="k">03 · Assets</div>
+      <div class="v">Asset &amp; utility management</div>
+    </div>
+    <div class="card">
+      <div class="k">04 · Reporting</div>
+      <div class="v">Tax + state-agency reporting</div>
+    </div>
+    <div class="card">
+      <div class="k">05 · Citizens</div>
+      <div class="v">Citizen-facing portal</div>
+    </div>
+  </div>
+
+  <div class="foot-note">Plus state integrations.</div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 10 — implementation reality               -->
+<!-- ============================================== -->
+<section class="slide s-impl" data-screen-label="10 Implementation">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">10 / 14 &nbsp;·&nbsp; <span>Implementation reality</span></div>
+  </div>
+
+  <div class="head">
+    <div class="eyebrow">Reality check</div>
+    <h2 class="title" style="margin-top:20px;font-size:72px">This isn't hard to&nbsp;build.</h2>
+  </div>
+
+  <div class="label-row">The meat is <strong style="color:var(--fg);font-weight:500">five Croatian state integrations</strong> and the regulatory flows that must be respected.</div>
+
+  <div class="integrations">
+    <div class="pill"><div class="name">FINA</div><div class="what">Financial Agency · e-Račun</div></div>
+    <div class="pill"><div class="name">Riznica</div><div class="what">State treasury</div></div>
+    <div class="pill"><div class="name">HZMO</div><div class="what">Pension institute</div></div>
+    <div class="pill"><div class="name">HZZO</div><div class="what">Health insurance</div></div>
+    <div class="pill"><div class="name">Porezna</div><div class="what">Tax administration · JOPPD</div></div>
+  </div>
+
+  <div class="closer">
+    <p style="color:var(--fg);font-weight:400">Everything else is <em style="font-style:normal;color:var(--brand)">modern web fundamentals.</em></p>
+    <p>Enhanced with modern agentic development, the timelines and costs <strong class="accent" style="font-weight:500">shrink drastically.</strong></p>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 11 — tech stack reveal                    -->
+<!-- ============================================== -->
+<section class="slide s-stack" data-screen-label="11 Tech stack">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">11 / 14 &nbsp;·&nbsp; <span>The incumbent stack</span></div>
+  </div>
+
+  <div class="head">
+    <div class="eyebrow muted">Per LC's official "About" page · spi.hr</div>
+    <h2 class="title" style="margin-top:20px">What the current system is built on.</h2>
+  </div>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="k">Desktop UI</div>
+      <div class="v"><span class="tech warn">Microsoft Windows Forms</span> + <span class="tech">C#</span></div>
+    </div>
+    <div class="layer">
+      <div class="k">Services</div>
+      <div class="v"><span class="tech">Java</span> + <span class="tech">Spring</span> + <span class="tech">SOAP</span> web services</div>
+    </div>
+    <div class="layer">
+      <div class="k">Business logic</div>
+      <div class="v"><span class="tech">T-SQL</span> stored procedures</div>
+    </div>
+    <div class="layer">
+      <div class="k">Reporting</div>
+      <div class="v"><span class="tech">JasperReports</span> / <span class="tech">SSRS</span></div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="line">Windows Forms was first released in <strong>2002.</strong></div>
+    <div class="line" style="opacity:0.85">LC's stated migration to <span style="font-family:var(--mono);color:var(--fg)">Angular</span> has been underway since at least <strong>2017.</strong></div>
+  </div>
+
+  <div class="citation">
+    <span class="label">Source</span>
+    <div class="row"><span class="src">LC official "About" page</span><span class="date">spi.hr</span></div>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 12 — vision                               -->
+<!-- ============================================== -->
+<section class="slide s-vision" data-screen-label="12 Vision">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">12 / 14 &nbsp;·&nbsp; <span>Vision</span></div>
+  </div>
+
+  <div class="head">
+    <div class="eyebrow">What it should be like</div>
+    <h2 class="title" style="margin-top:20px">The standard, in 2026.</h2>
+  </div>
+
+  <div class="grid">
+    <div class="item"><div class="n">01</div><div class="v"><strong>Smooth, modern user experience</strong></div></div>
+    <div class="item"><div class="n">04</div><div class="v"><strong>Unified credentials</strong><small>e-Građanin SSO · single sign-on across modules</small></div></div>
+    <div class="item"><div class="n">02</div><div class="v"><strong>Browser-based, no installation required</strong></div></div>
+    <div class="item"><div class="n">05</div><div class="v"><strong>Interoperability between systems</strong></div></div>
+    <div class="item"><div class="n">03</div><div class="v"><strong>Mobile app</strong><small>approve a €4.820 invoice from the Riva</small></div></div>
+    <div class="item"><div class="n">06</div><div class="v"><strong>Open API</strong><small>so citizens can access their city's data</small></div></div>
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 13 — about me                             -->
+<!-- ============================================== -->
+<section class="slide s-about" data-screen-label="13 About">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">13 / 14 &nbsp;·&nbsp; <span>About</span></div>
+  </div>
+
+  <div class="head">
+    <div class="eyebrow">Behind Troombic</div>
+    <h1 style="margin-top:20px">About me.</h1>
+  </div>
+
+  <div class="creds">
+    <div class="cred">
+      <div class="role">Founder &amp; CEO<small>Blockchain development studio</small></div>
+      <div class="org">Solbound</div>
+    </div>
+    <div class="cred">
+      <div class="role">Founder<small>Largest crypto community in the Balkans</small></div>
+      <div class="org">Superteam Balkan</div>
+    </div>
+    <div class="cred">
+      <div class="role">Developer<small>Eight years building software</small></div>
+      <div class="org">2018 — 2026</div>
+    </div>
+    <div class="cred">
+      <div class="role">Former President<small>Association of Young Programmers</small></div>
+      <div class="org">DUMP</div>
+    </div>
+  </div>
+
+  <div class="closing">Four years building software that <strong>handles money.</strong><br>We know where the problems live.</div>
+</section>
+
+<!-- ============================================== -->
+<!-- SLIDE 14 — closing values                       -->
+<!-- ============================================== -->
+<section class="slide s-closing" data-screen-label="14 Closing">
+  <div class="chrome">
+    <div class="mark"><span class="dot"></span>TROOMBIC · SHEEPAI 2026</div>
+    <div class="meta">14 / 14 &nbsp;·&nbsp; <span>The ask</span></div>
+  </div>
+
+  <div class="frame">
+    <p>I understand the vendor lock-in, and am <em>not naive</em> about the political nature of the situation we have here.</p>
+    <p>I wanted to use the opportunity of the SheepAI platform — supported by Grad Split itself — to shine a light on the issue, humbly offer our help, and maybe even get some face-time with the stakeholders to try solve the issue.</p>
+    <p>Because the people working at City Hall, and the citizens of <strong>the most beautiful city in the world</strong>, deserve better. Especially in 2026.</p>
+  </div>
+</section>
+
+</deck-stage>
+
+<script src="deck-stage.js"></script>
+</body>
+</html>

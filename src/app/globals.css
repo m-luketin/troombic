@@ -1,26 +1,284 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Fonts loaded via @fontsource imports in layout.tsx
+   - Inter Variable (sans)
+   - JetBrains Mono (mono, for money / IDs / timestamps) */
+
+@custom-variant dark (&:is(.dark *));
+
+/* =============================================================
+   Troombic Design System — Tokens
+   Source: troombic-design-system/colors_and_type.css
+   Base anchor: Grad Split palette (split.hr). Modernized.
+   ============================================================= */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ---------- Brand ---------- */
+  --brand:              #2E308C;        /* Split navy — primary */
+  --brand-hover:        #252880;
+  --brand-press:        #1C1F6B;
+  --brand-soft:         #E8E9F6;        /* tint for soft buttons / row highlights */
+  --brand-soft-hover:   #D5D7EF;
+  --brand-fg-on:        #FFFFFF;        /* text on brand fill */
+
+  --accent-teal:        #0EA5A1;        /* Adriatic — sparing use (pinned, urgency) */
+  --accent-teal-soft:   #DCF1EF;
+
+  /* ---------- Neutrals (light mode) ---------- */
+  --bg:                 #FAFAFB;
+  --surface:            #FFFFFF;
+  --surface-raised:     #FFFFFF;
+  --surface-sunken:     #F2F4F8;
+  --border-subtle:      #E6E8EE;
+  --border-strong:      #D2D6E0;
+  --fg:                 #0B172A;
+  --fg-2:               #475063;
+  --fg-3:               #7C8499;
+  --fg-disabled:        #B5BAC6;
+
+  /* ---------- Semantic ---------- */
+  --success:            #0F8A5F;
+  --success-soft:       #DEF1E8;
+  --warning:            #B45309;
+  --warning-soft:       #FAE8D4;
+  --danger:             #B91C1C;
+  --danger-soft:        #F8DCDC;
+  --info:               #1D4ED8;
+  --info-soft:          #DCE5FA;
+
+  /* ---------- Radii ---------- */
+  --radius-pill:        999px;
+  --radius:             8px;            /* the everything-else radius */
+
+  /* ---------- Shadows (light mode only) ---------- */
+  --shadow-card:        0 1px 2px rgba(11, 23, 42, 0.04), 0 1px 3px rgba(11, 23, 42, 0.06);
+  --shadow-pop:         0 8px 24px rgba(11, 23, 42, 0.08), 0 2px 6px rgba(11, 23, 42, 0.04);
+  --shadow-modal:       0 24px 64px rgba(11, 23, 42, 0.18), 0 8px 16px rgba(11, 23, 42, 0.06);
+  --ring-glow:          0 0 0 3px color-mix(in oklch, var(--brand) 30%, transparent);
+  --ring-danger:        0 0 0 3px color-mix(in oklch, var(--danger) 30%, transparent);
+
+  /* ---------- Motion ---------- */
+  --ease:               cubic-bezier(.2, .8, .2, 1);
+  --t-fast:             120ms;
+  --t-base:             180ms;
+  --t-slow:             240ms;
+
+  /* ---------- Type ---------- */
+  --font-sans:          'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:          'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---------- Layout ---------- */
+  --sidebar-w:          240px;
+  --sidebar-w-collapsed: 64px;
+  --topbar-h:           56px;
+
+  /* ============================================================
+     shadcn-compatible mappings → design-system tokens
+     Keeping shadcn variable names so all shadcn primitives
+     (Button, Dialog, Sheet, etc.) inherit the new theme for free.
+     ============================================================ */
+  --background:                  var(--bg);
+  --foreground:                  var(--fg);
+  --card:                        var(--surface);
+  --card-foreground:             var(--fg);
+  --popover:                     var(--surface-raised);
+  --popover-foreground:          var(--fg);
+  --primary:                     var(--brand);
+  --primary-foreground:          var(--brand-fg-on);
+  --secondary:                   var(--surface-sunken);
+  --secondary-foreground:        var(--fg);
+  --muted:                       var(--surface-sunken);
+  --muted-foreground:            var(--fg-2);
+  --accent:                      var(--brand-soft);
+  --accent-foreground:           var(--brand);
+  --destructive:                 var(--danger);
+  --destructive-foreground:      #FFFFFF;
+  --border:                      var(--border-subtle);
+  --input:                       var(--border-strong);
+  --ring:                        var(--brand);
+
+  --chart-1:                     var(--brand);
+  --chart-2:                     var(--accent-teal);
+  --chart-3:                     var(--info);
+  --chart-4:                     var(--warning);
+  --chart-5:                     var(--success);
+
+  --sidebar:                     var(--surface);
+  --sidebar-foreground:          var(--fg);
+  --sidebar-primary:             var(--brand);
+  --sidebar-primary-foreground:  var(--brand-fg-on);
+  --sidebar-accent:              var(--brand-soft);
+  --sidebar-accent-foreground:   var(--brand);
+  --sidebar-border:              var(--border-subtle);
+  --sidebar-ring:                var(--brand);
 }
 
+/* ============== Dark mode (demo default) ============== */
+:root[data-theme="dark"],
+.dark {
+  --brand:              #7B7EE0;        /* lightened for AA on dark bg */
+  --brand-hover:        #6F72D6;
+  --brand-press:        #5A5DC9;
+  --brand-soft:         #1A1F4A;
+  --brand-soft-hover:   #232B5E;
+  --brand-fg-on:        #0B172A;
+
+  --accent-teal:        #2DD4BF;
+  --accent-teal-soft:   #08332E;
+
+  --bg:                 #0B172A;        /* Split dark navy */
+  --surface:            #111F36;
+  --surface-raised:     #172A47;
+  --surface-sunken:     #0E1A2F;
+  --border-subtle:      #1F314F;
+  --border-strong:      #2C4068;
+  --fg:                 #F2F4F8;
+  --fg-2:               #9AA4B8;
+  --fg-3:               #6A748A;
+  --fg-disabled:        #455066;
+
+  --success:            #34D399;
+  --success-soft:       #0F2C25;
+  --warning:            #F59E0B;
+  --warning-soft:       #3A2A0F;
+  --danger:             #F87171;
+  --danger-soft:        #3A1717;
+  --info:               #60A5FA;
+  --info-soft:          #142141;
+
+  --shadow-card:        none;
+  --shadow-pop:         0 8px 24px rgba(0, 0, 0, .4);
+  --shadow-modal:       0 24px 64px rgba(0, 0, 0, .5);
+
+  --destructive-foreground: #FFFFFF;
+}
+
+/* ============== Tailwind v4 @theme exposure ============== */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background:                  var(--bg);
+  --color-foreground:                  var(--fg);
+  --color-card:                        var(--surface);
+  --color-card-foreground:             var(--fg);
+  --color-popover:                     var(--surface-raised);
+  --color-popover-foreground:          var(--fg);
+  --color-primary:                     var(--brand);
+  --color-primary-foreground:          var(--brand-fg-on);
+  --color-secondary:                   var(--surface-sunken);
+  --color-secondary-foreground:        var(--fg);
+  --color-muted:                       var(--surface-sunken);
+  --color-muted-foreground:            var(--fg-2);
+  --color-accent:                      var(--brand-soft);
+  --color-accent-foreground:           var(--brand);
+  --color-destructive:                 var(--danger);
+  --color-border:                      var(--border-subtle);
+  --color-input:                       var(--border-strong);
+  --color-ring:                        var(--brand);
+
+  --color-chart-1:                     var(--brand);
+  --color-chart-2:                     var(--accent-teal);
+  --color-chart-3:                     var(--info);
+  --color-chart-4:                     var(--warning);
+  --color-chart-5:                     var(--success);
+
+  --color-success:                     var(--success);
+  --color-warning:                     var(--warning);
+  --color-danger:                      var(--danger);
+  --color-info:                        var(--info);
+  --color-brand:                       var(--brand);
+  --color-brand-soft:                  var(--brand-soft);
+  --color-brand-hover:                 var(--brand-hover);
+  --color-teal:                        var(--accent-teal);
+
+  --color-fg:                          var(--fg);
+  --color-fg-2:                        var(--fg-2);
+  --color-fg-3:                        var(--fg-3);
+  --color-surface:                     var(--surface);
+  --color-surface-raised:              var(--surface-raised);
+  --color-surface-sunken:              var(--surface-sunken);
+  --color-border-subtle:               var(--border-subtle);
+  --color-border-strong:               var(--border-strong);
+
+  --color-sidebar:                     var(--surface);
+  --color-sidebar-foreground:          var(--fg);
+  --color-sidebar-primary:             var(--brand);
+  --color-sidebar-primary-foreground:  var(--brand-fg-on);
+  --color-sidebar-accent:              var(--brand-soft);
+  --color-sidebar-accent-foreground:   var(--brand);
+  --color-sidebar-border:              var(--border-subtle);
+  --color-sidebar-ring:                var(--brand);
+
+  --font-sans:                         var(--font-sans);
+  --font-mono:                         var(--font-mono);
+
+  --radius-sm:                         6px;
+  --radius-md:                         8px;
+  --radius-lg:                         8px;
+  --radius-xl:                         12px;
+  --radius-2xl:                        12px;
+  --radius-3xl:                        16px;
+  --radius-4xl:                        20px;
+  --radius-pill:                       999px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  html {
+    font-family: var(--font-sans);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============== Sidebar navy-chrome override ==============
+   Mirrors split.hr's navy header band. Scopes design tokens
+   inside the sidebar so all child components render white-on-navy
+   without needing per-component edits. */
+.sidebar-navy-chrome,
+.sidebar-navy-chrome [data-slot="sidebar-inner"] {
+  --fg:                 #FFFFFF;
+  --fg-2:               #D8DBE7;
+  --fg-3:               #A8AEC4;
+  --surface:            #2E308C;
+  --surface-sunken:     rgba(255, 255, 255, 0.08);
+  --surface-raised:     #3B3DA0;
+  --border-subtle:      rgba(255, 255, 255, 0.10);
+  --border-strong:      rgba(255, 255, 255, 0.15);
+  /* Active state: solid white pill with navy text — high contrast on navy chrome */
+  --brand:              #2E308C;
+  --brand-soft:         #FFFFFF;
+  --brand-soft-hover:   #F2F3FA;
+  --brand-fg-on:        #2E308C;
+  --sidebar:            #2E308C;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary:    #FFFFFF;
+  --sidebar-primary-foreground: #2E308C;
+  --sidebar-accent:     rgba(255, 255, 255, 0.14);
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border:     rgba(255, 255, 255, 0.10);
+  --sidebar-ring:       #FFFFFF;
 }
+
+/* ============== Typography utility classes ============== */
+.t-display     { font-family: var(--font-sans); font-size: 36px; line-height: 44px; font-weight: 600; letter-spacing: -0.02em; }
+.t-h1          { font-family: var(--font-sans); font-size: 28px; line-height: 36px; font-weight: 600; letter-spacing: -0.015em; }
+.t-h2          { font-family: var(--font-sans); font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em; }
+.t-h3          { font-family: var(--font-sans); font-size: 18px; line-height: 26px; font-weight: 600; }
+.t-body        { font-family: var(--font-sans); font-size: 14px; line-height: 20px; font-weight: 400; }
+.t-body-lg     { font-family: var(--font-sans); font-size: 16px; line-height: 24px; font-weight: 400; }
+.t-body-strong { font-family: var(--font-sans); font-size: 14px; line-height: 20px; font-weight: 500; }
+.t-caption     { font-family: var(--font-sans); font-size: 12px; line-height: 18px; font-weight: 500; color: var(--fg-2); }
+.t-micro       { font-family: var(--font-sans); font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-2); }
+.t-mono        { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-variant-numeric: tabular-nums; }
+.t-num         { font-variant-numeric: tabular-nums; }
