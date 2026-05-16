@@ -80,11 +80,10 @@ export function AppSidebar() {
           className="flex items-center gap-2.5 px-2 py-2 hover:opacity-90 transition-opacity"
         >
           <Image
-            src="/logo-troombic-light.svg"
+            src="/logo-troombic.svg"
             alt=""
             width={28}
             height={28}
-            className="rounded-md"
             priority
           />
           <span className="text-base font-semibold tracking-tight text-[color:var(--fg)]">

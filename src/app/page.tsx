@@ -41,11 +41,10 @@ export default function LoginPage() {
       >
         <div className="flex items-center gap-3 relative z-10">
           <Image
-            src="/logo-troombic-light.svg"
+            src="/logo-troombic.svg"
             alt=""
             width={36}
             height={36}
-            className="rounded-md"
             priority
           />
           <span className="text-[22px] font-semibold tracking-tight">
