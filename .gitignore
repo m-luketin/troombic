@@ -42,3 +42,4 @@ next-env.d.ts
 
 # internal docs — excluded from public repo
 *.md
+!README.md
