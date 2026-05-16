@@ -76,7 +76,7 @@ function LikvidaturaQueueInner() {
   }, [all, filter, q]);
 
   return (
-    <div className="flex flex-col gap-5 p-6 lg:p-8">
+    <div className="flex flex-col gap-5 p-3 sm:p-6 lg:p-8 min-w-0">
       {/* Header */}
       <div className="flex items-end justify-between gap-4 flex-wrap">
         <div>
@@ -143,7 +143,8 @@ function LikvidaturaQueueInner() {
 
       {/* Table */}
       <Card className="p-0 overflow-hidden border-[color:var(--border-subtle)] shadow-[var(--shadow-card)]">
-        <table className="w-full border-collapse">
+        <div className="overflow-x-auto">
+        <table className="w-full border-collapse min-w-[720px]">
           <thead>
             <tr className="bg-[color:var(--surface-sunken)] border-b border-[color:var(--border-subtle)]">
               <Th className="w-8 pl-5"><input type="checkbox" /></Th>
@@ -211,6 +212,7 @@ function LikvidaturaQueueInner() {
             ))}
           </tbody>
         </table>
+        </div>
         {filtered.length === 0 && (
           <div className="py-12 px-6 text-center text-[color:var(--fg-2)]">
             Nema rezultata. Bravo.

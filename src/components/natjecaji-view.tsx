@@ -64,7 +64,7 @@ export function NatjecajiView({ result }: { result: TedFetchResult }) {
   }, [result.tenders, filter, itOnly, q]);
 
   return (
-    <div className="flex flex-col gap-5 p-6 lg:p-8">
+    <div className="flex flex-col gap-5 p-3 sm:p-6 lg:p-8 min-w-0">
       {/* Header */}
       <div className="flex items-end justify-between gap-4 flex-wrap">
         <div>
@@ -138,7 +138,8 @@ export function NatjecajiView({ result }: { result: TedFetchResult }) {
 
       {/* Tenders table */}
       <Card className="p-0 overflow-hidden border-[color:var(--border-subtle)] shadow-[var(--shadow-card)]">
-        <table className="w-full border-collapse">
+        <div className="overflow-x-auto">
+        <table className="w-full border-collapse min-w-[760px]">
           <thead>
             <tr className="bg-[color:var(--surface-sunken)] border-b border-[color:var(--border-subtle)]">
               <Th>Naslov</Th>
@@ -235,6 +236,7 @@ export function NatjecajiView({ result }: { result: TedFetchResult }) {
             })}
           </tbody>
         </table>
+        </div>
         {filtered.length === 0 && (
           <div className="py-12 px-6 text-center text-[color:var(--fg-2)]">
             Nema rezultata za zadane filtere.

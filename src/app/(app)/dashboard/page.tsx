@@ -54,7 +54,7 @@ export default function DashboardPage() {
   const budgetPct = (budgetUsedYTD / budgetPlanQ2) * 100;
 
   return (
-    <div className="flex flex-col gap-6 p-6 lg:p-8">
+    <div className="flex flex-col gap-5 p-3 sm:p-6 lg:p-8 min-w-0">
       {/* Greeting */}
       <div className="flex items-baseline gap-4 flex-wrap">
         <h1 className="text-[28px] leading-[36px] font-semibold tracking-[-0.015em] text-[color:var(--fg)] m-0">
@@ -68,17 +68,17 @@ export default function DashboardPage() {
       {/* Hero row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Pending tile (spans 1.4fr in design, we approximate) */}
-        <Card className="md:col-span-1 p-7 relative overflow-hidden flex flex-col gap-3.5 border-[color:var(--border-subtle)] shadow-[var(--shadow-card)]">
+        <Card className="md:col-span-1 p-5 sm:p-7 relative overflow-hidden flex flex-col gap-3.5 border-[color:var(--border-subtle)] shadow-[var(--shadow-card)] min-w-0">
           <div className="t-micro">U redu čekanja</div>
-          <div className="flex items-baseline gap-3">
-            <span className="text-[56px] leading-[56px] font-semibold tracking-[-0.03em] text-[color:var(--fg)] tabular-nums">
+          <div className="flex items-baseline gap-3 flex-wrap">
+            <span className="text-[44px] leading-[44px] sm:text-[56px] sm:leading-[56px] font-semibold tracking-[-0.03em] text-[color:var(--fg)] tabular-nums">
               {pending.length}
             </span>
-            <span className="text-[18px] leading-[24px] font-medium text-[color:var(--fg-2)]">
+            <span className="text-[16px] leading-[22px] sm:text-[18px] sm:leading-[24px] font-medium text-[color:var(--fg-2)]">
               računa čeka vašu provjeru
             </span>
           </div>
-          <div className="flex gap-5 mt-1">
+          <div className="flex flex-wrap gap-x-5 gap-y-3 mt-1">
             <Metric label="Ukupna vrijednost" value={fmtEur(pendingSum)} mono />
             <Metric label="Najstariji" value={`${oldestWait} dana`} />
             <Metric label="Hitno" value={String(urgent)} highlight />
@@ -193,7 +193,8 @@ export default function DashboardPage() {
             Otvori sve <ArrowRight className="size-3.5" />
           </Link>
         </div>
-        <table className="w-full border-collapse">
+        <div className="overflow-x-auto">
+        <table className="w-full border-collapse min-w-[560px]">
           <tbody>
             {pending.map((inv, i) => (
               <tr
@@ -236,6 +237,7 @@ export default function DashboardPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </Card>
     </div>
   );

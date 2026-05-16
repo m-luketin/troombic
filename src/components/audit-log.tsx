@@ -68,7 +68,7 @@ export function AuditLog() {
       <aside
         aria-hidden={!open}
         className={cn(
-          "fixed top-0 right-0 bottom-0 w-[420px] z-[90] bg-[color:var(--surface)] border-l border-[color:var(--border-subtle)] flex flex-col transition-transform duration-[240ms]",
+          "fixed top-0 right-0 bottom-0 w-full sm:w-[420px] z-[90] bg-[color:var(--surface)] border-l border-[color:var(--border-subtle)] flex flex-col transition-transform duration-[240ms]",
           open ? "translate-x-0 shadow-[var(--shadow-modal)]" : "translate-x-full"
         )}
         style={{ transitionTimingFunction: "cubic-bezier(.2,.8,.2,1)" }}

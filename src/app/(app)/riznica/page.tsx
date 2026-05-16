@@ -124,7 +124,7 @@ export default function RiznicaPage() {
   }
 
   return (
-    <div className="flex flex-col gap-5 p-6 lg:p-8">
+    <div className="flex flex-col gap-5 p-3 sm:p-6 lg:p-8 min-w-0">
       {/* Header */}
       <div className="flex items-end justify-between gap-4 flex-wrap">
         <div>
@@ -212,7 +212,8 @@ export default function RiznicaPage() {
               uživo
             </Pill>
           </div>
-          <table className="w-full border-collapse">
+          <div className="overflow-x-auto">
+          <table className="w-full border-collapse min-w-[520px]">
             <tbody>
               {TRANSACTIONS.map((t, i) => (
                 <tr
@@ -267,6 +268,7 @@ export default function RiznicaPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </Card>
 
         {/* LC year-by-year mini chart */}
