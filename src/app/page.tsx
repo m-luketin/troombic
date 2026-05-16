@@ -83,11 +83,10 @@ export default function LoginPage() {
           {/* Brand row on mobile */}
           <div className="lg:hidden flex items-center gap-2.5 mb-10 justify-center">
             <Image
-              src="/logo-troombic-light.svg"
+              src="/logo-troombic.svg"
               alt=""
               width={32}
               height={32}
-              className="rounded-md"
               priority
             />
             <span className="text-xl font-semibold tracking-tight text-[color:var(--fg)]">
